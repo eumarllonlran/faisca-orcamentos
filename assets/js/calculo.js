@@ -1,5 +1,4 @@
 // calculo.js - regras de preço: mão de obra, material, urgência, deslocamento e valor mínimo
-
 // Deixa o texto num formato padrão para comparar: " Manaíra " -> "manaira"
 function normalizarTexto(texto) {
     return (texto || '')
