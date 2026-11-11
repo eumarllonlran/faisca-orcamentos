@@ -1,5 +1,11 @@
 // calculo.js - regras de preço: mão de obra, material, urgência, deslocamento e valor mínimo
-
+function normalizarTexto(texto) {
+    return texto
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+}
 function calcularOrcamento(pedido, config) {
     let subtotal = 0;
 
@@ -24,37 +30,40 @@ function calcularOrcamento(pedido, config) {
 
     // 4. Calcular deslocamento
     let deslocamento;
+    const cidadePedido = normalizarTexto(pedido.endereco.cidade);
+    const cidadeBase = normalizarTexto(config.deslocamento.cidadeBase);
 
-    if (pedido.endereco.cidade !== config.deslocamento.cidadeBase) {
+    if (cidadePedido !== cidadeBase) {
         deslocamento = config.deslocamento.outraCidade;
-    } else if (
-        config.deslocamento.bairros[pedido.endereco.bairro] !== undefined
-    ) {
-        deslocamento = config.deslocamento.bairros[pedido.endereco.bairro];
-    } else {
-        deslocamento = config.deslocamento.padraoMesmaCidade;
     }
+} else if (
+    config.deslocamento.bairros[pedido.endereco.bairro] !== undefined
+) {
+    deslocamento = config.deslocamento.bairros[pedido.endereco.bairro];
+} else {
+    deslocamento = config.deslocamento.padraoMesmaCidade;
+}
 
-    // 5. Calcular total
-    let total = subtotal + deslocamento;
+// 5. Calcular total
+let total = subtotal + deslocamento;
 
-    // 6. Aplicar valor mínimo
-    let aplicouMinimo = false;
+// 6. Aplicar valor mínimo
+let aplicouMinimo = false;
 
-    if (total < config.valorMinimoVisita) {
-        total = config.valorMinimoVisita;
-        aplicouMinimo = true;
-    }
+if (total < config.valorMinimoVisita) {
+    total = config.valorMinimoVisita;
+    aplicouMinimo = true;
+}
 
-    // Arredondar para duas casas decimais
-    subtotal = Number(subtotal.toFixed(2));
-    deslocamento = Number(deslocamento.toFixed(2));
-    total = Number(total.toFixed(2));
+// Arredondar para duas casas decimais
+subtotal = Number(subtotal.toFixed(2));
+deslocamento = Number(deslocamento.toFixed(2));
+total = Number(total.toFixed(2));
 
-    return {
-        subtotal,
-        deslocamento,
-        total,
-        aplicouMinimo
-    };
+return {
+    subtotal,
+    deslocamento,
+    total,
+    aplicouMinimo
+};
 }
