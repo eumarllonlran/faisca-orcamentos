@@ -1,5 +1,14 @@
 // calculo.js - regras de preço: mão de obra, material, urgência, deslocamento e valor mínimo
 
+// Deixa o texto num formato padrão para comparar: " Manaíra " -> "manaira"
+function normalizarTexto(texto) {
+    return (texto || '')
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+}
+
 function calcularOrcamento(pedido, config) {
     let subtotal = 0;
 
@@ -24,15 +33,24 @@ function calcularOrcamento(pedido, config) {
 
     // 4. Calcular deslocamento
     let deslocamento;
+    const cidadePedido = normalizarTexto(pedido.endereco.cidade);
+    const cidadeBase = normalizarTexto(config.deslocamento.cidadeBase);
+    const bairroPedido = normalizarTexto(pedido.endereco.bairro);
 
-    if (pedido.endereco.cidade !== config.deslocamento.cidadeBase) {
-        deslocamento = config.deslocamento.outraCidade;
-    } else if (
-        config.deslocamento.bairros[pedido.endereco.bairro] !== undefined
-    ) {
-        deslocamento = config.deslocamento.bairros[pedido.endereco.bairro];
+    // Procura o bairro na lista, comparando os nomes normalizados
+    let taxaBairro;
+    for (const nome in config.deslocamento.bairros) {
+        if (normalizarTexto(nome) === bairroPedido) {
+            taxaBairro = config.deslocamento.bairros[nome];
+        }
+    }
+
+    if (cidadePedido !== cidadeBase) {
+        deslocamento = config.deslocamento.outraCidade;        // outra cidade
+    } else if (taxaBairro !== undefined) {
+        deslocamento = taxaBairro;                             // bairro da lista
     } else {
-        deslocamento = config.deslocamento.padraoMesmaCidade;
+        deslocamento = config.deslocamento.padraoMesmaCidade;  // bairro fora da lista
     }
 
     // 5. Calcular total
