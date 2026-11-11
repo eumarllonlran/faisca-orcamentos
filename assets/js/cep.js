@@ -1,4 +1,3 @@
-
 async function buscarCep(cep) {
     cep = cep.replace(/\D/g, "");
 

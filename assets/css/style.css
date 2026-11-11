@@ -60,7 +60,7 @@ body {
 /* Formulário */
 
 /* Barra de progresso (o texto fica dentro da barra) */
-.progresso {
+.progress {
     height: 1.6rem;
     background: var(--cinza);
     font-weight: 600;

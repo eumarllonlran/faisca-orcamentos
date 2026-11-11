@@ -25,5 +25,5 @@ let mensagem = `⚡ *Novo pedido de orçamento*
         mensagem += `\n📝 Obs: ${pedido.contato.observacoes}`;
     }
 
-    return `https://wa.me/${5583996700764}?text=${encodeURIComponent(mensagem)}`;
+    return `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
 }
