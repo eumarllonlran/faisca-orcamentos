@@ -1,18 +1,17 @@
-// wizard.js - controla o formulário em etapas
-// Autor: Marllon Lorran
+// Wizard - Controle das etapas do formulário do orçamento.html
 
-// ===== VARIÁVEIS =====
+// Variáveis
 let etapaAtual = 1;   // etapa que está aparecendo
 let config = null;    // dados do servicos.json (preços, WhatsApp...)
 let total = 0;        // valor calculado no resumo
 
-// ===== CARREGAR O servicos.json =====
+// Carregar servicos.json 
 // fetch busca o arquivo; .then roda quando ele chega
 fetch('assets/data/servicos.json')
     .then(function (resposta) { return resposta.json(); })
     .then(function (dados) { config = dados; });
 
-// ===== MOSTRAR UMA ETAPA =====
+// Mostra uma etapa (1 a 6)
 function mostrarEtapa(numero) {
     etapaAtual = numero;
 
@@ -22,24 +21,21 @@ function mostrarEtapa(numero) {
         etapa.hidden = etapa.dataset.etapa != numero;
     });
 
-    // Atualiza a barra: etapa 3 de 6 = 50%
+    // Atualiza a barra com a porcentagem e texto
     const barra = document.getElementById('barra');
     barra.style.width = (numero / 6 * 100) + '%';
     barra.textContent = 'Etapa ' + numero + ' de 6';
 
-    // Esconde o Voltar na etapa 1 e o Próximo na etapa 6
     document.getElementById('btn-voltar').hidden = numero === 1;
     document.getElementById('btn-proximo').hidden = numero === 6;
 
-    // Limpa a mensagem de erro
     document.getElementById('erro').textContent = '';
 
-    // Na última etapa, monta o resumo
     if (numero === 6) montarResumo();
 }
 
-// ===== VALIDAR A ETAPA ATUAL =====
-// Retorna uma mensagem de erro, ou '' (vazio) se estiver tudo certo
+// Validar a etapa atual
+// Retorna uma mensagem de erro
 function validar() {
     if (etapaAtual === 1 && !valorMarcado('tipo')) return 'Escolha o tipo de serviço.';
     if (etapaAtual === 2 && lerItens().length === 0) return 'Coloque a quantidade de pelo menos um item.';
@@ -51,7 +47,7 @@ function validar() {
     return '';
 }
 
-// ===== BOTÕES PRÓXIMO E VOLTAR =====
+// Botões de próximo e voltar
 document.getElementById('btn-proximo').addEventListener('click', function () {
     const mensagem = validar();
     if (mensagem !== '') {
@@ -65,9 +61,9 @@ document.getElementById('btn-voltar').addEventListener('click', function () {
     mostrarEtapa(etapaAtual - 1);
 });
 
-// ===== BUSCAR CEP (usa a função do Fábio) =====
+// Buscar CEP - função do Fábio
 document.getElementById('btn-cep').addEventListener('click', async function () {
-    // NOVO: se o cep.js do Fábio ainda não estiver pronto, avisa e para aqui
+
     if (typeof buscarCep !== 'function') {
         document.getElementById('erro').textContent = 'Busca de CEP ainda não disponível. Preencha o endereço manualmente.';
         return;
@@ -85,7 +81,7 @@ document.getElementById('btn-cep').addEventListener('click', async function () {
     }
 });
 
-// ===== LER OS ITENS ESCOLHIDOS =====
+// Lê os itens escolhidos
 // Devolve só os itens com quantidade maior que 0: [{ id, nome, qtd }]
 function lerItens() {
     const itens = [];
@@ -98,7 +94,7 @@ function lerItens() {
     return itens;
 }
 
-// ===== MONTAR O PEDIDO (formato combinado com Fábio e Luiz) =====
+// Montar o pedido (formato combinado com Fábio e Luiz)
 function montarPedido() {
     return {
         tipo: valorMarcado('tipo'),
@@ -171,5 +167,5 @@ function valorMarcado(nome) {
     return marcado ? marcado.value : null;
 }
 
-// ===== COMEÇO: mostra a etapa 1 =====
+// Mostra a primeira etapa quando carregar a página
 mostrarEtapa(1);
