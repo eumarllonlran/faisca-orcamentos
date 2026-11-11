@@ -34,7 +34,6 @@ function mostrarEtapa(numero) {
     if (numero === 6) montarResumo();
 }
 
-// Validar a etapa atual
 // Retorna uma mensagem de erro
 function validar() {
     if (etapaAtual === 1 && !valorMarcado('tipo')) return 'Escolha o tipo de serviço.';
@@ -70,13 +69,13 @@ document.getElementById('btn-cep').addEventListener('click', async function () {
     }
 
     try {
-        const endereco = await buscarCep(valor('cep')); // await: espera a resposta da internet
+        const endereco = await buscarCep(valor('cep')); // resposta da internet
         document.getElementById('rua').value = endereco.rua;
         document.getElementById('bairro').value = endereco.bairro;
         document.getElementById('cidade').value = endereco.cidade;
         document.getElementById('uf').value = endereco.uf;
     } catch (e) {
-        // Se der erro (CEP inválido, sem internet...), mostra a mensagem
+        // Se der erro (CEP inválido, sem internet...), mostra a mensagem de erro
         document.getElementById('erro').textContent = e.message;
     }
 });
@@ -114,7 +113,7 @@ function montarPedido() {
     };
 }
 
-// ===== RESUMO (usa a função do Luiz) =====
+// Resumo (usa a função do Luiz)
 function montarResumo() {
     const pedido = montarPedido();
 
@@ -130,7 +129,6 @@ function montarResumo() {
         ' - ' + pedido.endereco.bairro + ', ' + pedido.endereco.cidade + '</p>' +
         '<p><strong>Contato:</strong> ' + pedido.contato.nome + ' - ' + pedido.contato.telefone + '</p>';
 
-    // NOVO: se o calculo.js do Luiz ainda não estiver pronto, avisa e para aqui
     if (typeof calcularOrcamento !== 'function') {
         document.getElementById('total').textContent = 'Cálculo ainda não disponível.';
         return;
@@ -143,9 +141,9 @@ function montarResumo() {
         'Total estimado: ' + total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
-// ===== ENVIAR PELO WHATSAPP (usa a função do Fábio) =====
+// Enviar pelo WhatsApp (usa a função do Fábio)
 document.getElementById('btn-enviar').addEventListener('click', function () {
-    // NOVO: se o whatsapp.js do Fábio ainda não estiver pronto, avisa e para aqui
+    // Se o whatsapp.js do Fábio ainda não estiver pronto, avisa e para aqui
     if (typeof gerarLinkWhatsApp !== 'function') {
         document.getElementById('erro').textContent = 'Envio pelo WhatsApp ainda não disponível.';
         return;
@@ -155,7 +153,7 @@ document.getElementById('btn-enviar').addEventListener('click', function () {
     window.open(link, '_blank'); // abre o WhatsApp em outra aba
 });
 
-// ===== FUNÇÕES DE APOIO =====
+// Funções de apoio
 // Valor de um campo, sem espaços nas pontas
 function valor(id) {
     return document.getElementById(id).value.trim();
