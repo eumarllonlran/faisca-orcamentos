@@ -149,7 +149,7 @@ input[type=radio] {
 }
 
 .btn-faisca {
-    --bs-btn-color: #fff;
+    --bs-btn-color: var(--grafite);
     --bs-btn-bg: var(--laranja);
     --bs-btn-border-color: var(--laranja);
     --bs-btn-hover-color: #fff;
