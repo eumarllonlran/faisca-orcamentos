@@ -1,7 +1,8 @@
-
 function gerarLinkWhatsApp(pedido, total, numero) {
 
-    let mensagem = `⚡ *Novo pedido de orçamento*
+    const numero = 5583996700764; // Número do WhatsApp (com DDD e sem espaços ou traços)
+
+let mensagem = `⚡ *Novo pedido de orçamento*
 👤 Nome: ${pedido.contato.nome}
 📞 Telefone: ${pedido.contato.telefone}
 📍 Endereço: ${pedido.endereco.rua}, ${pedido.endereco.numero} - ${pedido.endereco.bairro}, ${pedido.endereco.cidade}/${pedido.endereco.uf}
