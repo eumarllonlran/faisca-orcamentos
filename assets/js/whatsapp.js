@@ -1,7 +1,5 @@
 function gerarLinkWhatsApp(pedido, total, numero) {
 
-    const numero = 5583996700764; // Número do WhatsApp (com DDD e sem espaços ou traços)
-
 let mensagem = `⚡ *Novo pedido de orçamento*
 👤 Nome: ${pedido.contato.nome}
 📞 Telefone: ${pedido.contato.telefone}
@@ -27,5 +25,5 @@ let mensagem = `⚡ *Novo pedido de orçamento*
         mensagem += `\n📝 Obs: ${pedido.contato.observacoes}`;
     }
 
-    return `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
+    return `https://wa.me/${5583996700764}?text=${encodeURIComponent(mensagem)}`;
 }
