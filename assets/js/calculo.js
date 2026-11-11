@@ -1,11 +1,13 @@
 // calculo.js - regras de preço: mão de obra, material, urgência, deslocamento e valor mínimo
+// Deixa o texto num formato padrão para comparar: " Manaíra " -> "manaira"
 function normalizarTexto(texto) {
-    return texto
+    return (texto || '')
         .trim()
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase();
 }
+
 function calcularOrcamento(pedido, config) {
     let subtotal = 0;
 
@@ -32,38 +34,44 @@ function calcularOrcamento(pedido, config) {
     let deslocamento;
     const cidadePedido = normalizarTexto(pedido.endereco.cidade);
     const cidadeBase = normalizarTexto(config.deslocamento.cidadeBase);
+    const bairroPedido = normalizarTexto(pedido.endereco.bairro);
+
+    // Procura o bairro na lista, comparando os nomes normalizados
+    let taxaBairro;
+    for (const nome in config.deslocamento.bairros) {
+        if (normalizarTexto(nome) === bairroPedido) {
+            taxaBairro = config.deslocamento.bairros[nome];
+        }
+    }
 
     if (cidadePedido !== cidadeBase) {
-        deslocamento = config.deslocamento.outraCidade;
+        deslocamento = config.deslocamento.outraCidade;        // outra cidade
+    } else if (taxaBairro !== undefined) {
+        deslocamento = taxaBairro;                             // bairro da lista
+    } else {
+        deslocamento = config.deslocamento.padraoMesmaCidade;  // bairro fora da lista
     }
-} else if (
-    config.deslocamento.bairros[pedido.endereco.bairro] !== undefined
-) {
-    deslocamento = config.deslocamento.bairros[pedido.endereco.bairro];
-} else {
-    deslocamento = config.deslocamento.padraoMesmaCidade;
-}
 
-// 5. Calcular total
-let total = subtotal + deslocamento;
+    // 5. Calcular total
+    let total = subtotal + deslocamento;
 
-// 6. Aplicar valor mínimo
-let aplicouMinimo = false;
+    // 6. Aplicar valor mínimo
+    let aplicouMinimo = false;
 
-if (total < config.valorMinimoVisita) {
-    total = config.valorMinimoVisita;
-    aplicouMinimo = true;
-}
+    if (total < config.valorMinimoVisita) {
+        total = config.valorMinimoVisita;
+        aplicouMinimo = true;
+    }
 
-// Arredondar para duas casas decimais
-subtotal = Number(subtotal.toFixed(2));
-deslocamento = Number(deslocamento.toFixed(2));
-total = Number(total.toFixed(2));
+    // Arredondar para duas casas decimais
+    subtotal = Number(subtotal.toFixed(2));
+    deslocamento = Number(deslocamento.toFixed(2));
+    total = Number(total.toFixed(2));
 
-return {
-    subtotal,
-    deslocamento,
-    total,
-    aplicouMinimo
-};
+    return {
+        subtotal,
+        deslocamento,
+        total,
+        aplicouMinimo
+    };
 }
