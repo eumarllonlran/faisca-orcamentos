@@ -6,8 +6,8 @@ Site de orçamento de serviços elétricos para um eletricista autônomo de **Jo
 ---
 ## ✨ Funcionalidades (v1)
 
-- Landing page com apresentação, serviços e área de atendimento
-- Formulário de orçamento em etapas (wizard) com barra de progresso e validação
+- Landing page com apresentação e serviços
+- Formulário de orçamento em 6 etapas (wizard) com barra de progresso e validação
 - Cálculo do valor estimado com base em:
   - mão de obra por item
   - material por conta do cliente ou do eletricista
@@ -51,12 +51,14 @@ Depois acesse `http://localhost:8000`.
 ## 🗺️ Roadmap
 
 - [x] Setup do projeto e estrutura de pastas
-- [ ] Landing page
-- [ ] Estrutura do wizard
-- [ ] Dados e cálculo
-- [ ] Integração com ViaCEP e taxa de deslocamento
-- [ ] Envio pelo WhatsApp
+- [x] Landing page
+- [x] Formulário em etapas (wizard)
+- [x] Dados e cálculo
+- [x] Integração com ViaCEP e taxa de deslocamento
+- [x] Envio pelo WhatsApp
+- [ ] Testes e correções
 - [ ] Polimento e responsividade
+- [ ] Publicação no GitHub Pages
 ---
 ## ⚠️ Aviso
 
@@ -64,9 +66,9 @@ Os valores exibidos são **estimativas**. O valor final depende de visita técni
 ---
 ## 👥 Equipe
 
-| Nome | GitHub |
-|---|---|
-| Marllon Lorran | [@eumarllonlran](https://github.com/eumarllonlran) |
-| Fábio Henrique | — |
-| Luiz Vinicius Brito Correia | — |
-| Pedro Henrique | — |
+| Nome | Responsabilidade | GitHub |
+|---|---|---|
+| Marllon Lorran | Formulário em etapas (`orcamento.html`, `wizard.js`) | [@eumarllonlran](https://github.com/eumarllonlran) |
+| Fábio Henrique | Integrações (`cep.js`, `whatsapp.js`) | — |
+| Luiz Vinicius Brito Correia | Cálculo (`calculo.js`) | — |
+| Pedro Henrique | Dados e visual (`servicos.json`, `style.css`) | — |
