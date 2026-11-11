@@ -3,13 +3,58 @@
   "valorMinimoVisita": 100,
   "multiplicadorUrgencia": 1.5,
   "acrescimoMaterial": 0.2,
-  "servicos": [ {"id": "tomada", "nome": "Tomada", "categoria": "Instalação", "preco": 20}, {"id": "fiação", "nome": "Fiação", "categoria": "Instalação/manutenção", "preco": 40}, {"id": "interruptor", "nome": "Interruptor", "categoria": "Instalação", "preco": 20}, {"id": "chuveiro", "nome": "Chuveiro", "categoria": "Instalação/Manutenção", "preco": 30}, {"id": "geral", "nome": "geral", "categoria": "Instalação", "preco": 150}, {"id": "iluminacao", "nome": "Iluminação", "categoria": "Instalação/manutenção", "preco": 35}],
-  
+  "servicos": [
+    {
+      "id": "tomada",
+      "nome": "Tomada",
+      "preco": 20
+    },
+    {
+      "id": "interruptor",
+      "nome": "Interruptor",
+      "preco": 20
+    },
+    {
+      "id": "chuveiro",
+      "nome": "Chuveiro",
+      "preco": 30
+    },
+    {
+      "id": "luminaria",
+      "nome": "Luminária",
+      "preco": 35
+    },
+    {
+      "id": "ventilador",
+      "nome": "Ventilador de teto",
+      "preco": 60
+    },
+    {
+      "id": "disjuntor",
+      "nome": "Disjuntor",
+      "preco": 40
+    }
+  ],
   "deslocamento": {
-    "cidadeBase": "João Pessoa", 
-    "bairros": { "Mangabeira": 15, "Bancarios": 15, "Valentina": 25, "Torre": 15, "Bairro Dos Estados": 20, "Castelo Branco": 10, "Mucumagro": 30, "Paratibe": 30, "alto do ceu": 25, "bessa": 20, "altiplano": 25, "manaira": 25, "gramame": 25, "gaisel": 20, "Padre zé": 20},
-
-    "padraoMesmaCidade": 0,
+    "cidadeBase": "João Pessoa",
+    "bairros": {
+      "Mangabeira": 15,
+      "Bancarios": 15,
+      "Valentina": 25,
+      "Torre": 15,
+      "Bairro Dos Estados": 20,
+      "Castelo Branco": 10,
+      "Mucumagro": 30,
+      "Paratibe": 30,
+      "alto do ceu": 25,
+      "bessa": 20,
+      "altiplano": 25,
+      "manaira": 25,
+      "gramame": 25,
+      "gaisel": 20,
+      "Padre zé": 20
+    },
+    "padraoMesmaCidade": 30,
     "outraCidade": 60
   }
 }
